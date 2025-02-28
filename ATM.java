@@ -41,46 +41,55 @@ public class ATM {
 
     public static void main(String[] args) {
         Scanner karna = new Scanner(System.in);
-        ATM atm = new ATM(1000,1234);  // Initial balance 1000
+        ATM atm = new ATM(1000,0000);  // Initial balance 1000
+        int attempt=3;
 
-        System.out.print("Enter the PIN :");
-        int enteredpin = karna.nextInt();
+        while(attempt>0){
+            System.out.print("Enter the PIN :");
+            int enteredpin = karna.nextInt();
 
-        if(atm.validatepin(enteredpin)){
-            while (true) {
-                System.out.println("\n--- ATM Machine ---");
-                System.out.println("1. Check Balance");
-                System.out.println("2. Deposit Money");
-                System.out.println("3. Withdraw Money");
-                System.out.println("4. Exit");
-                System.out.print("Choose an option: ");
+            if(atm.validatepin(enteredpin)){
+                while (true) {
+                    System.out.println("\n--- ATM Machine ---");
+                    System.out.println("1. Check Balance");
+                    System.out.println("2. Deposit Money");
+                    System.out.println("3. Withdraw Money");
+                    System.out.println("4. Exit");
+                    System.out.print("Choose an option: ");
 
-                int choice = karna.nextInt();
-                
-                switch (choice) {
-                    case 1:
-                        atm.checkBalance();
-                        break;
-                    case 2:
-                        System.out.print("Enter deposit amount: ");
-                        double depositAmount = karna.nextDouble();
-                        atm.deposit(depositAmount);
-                        break;
-                    case 3:
-                        System.out.print("Enter withdrawal amount: ");
-                        double withdrawAmount = karna.nextDouble();
-                        atm.withdraw(withdrawAmount);
-                        break;
-                    case 4:
-                        System.out.println("Thank you for using our ATM. Goodbye!");
-                        return;
-                    default:
-                        System.out.println("Invalid choice! Please try again.");
+                    int choice = karna.nextInt();
+                    
+                    switch (choice) {
+                        case 1:
+                            atm.checkBalance();
+                            break;
+                        case 2:
+                            System.out.print("Enter deposit amount: ");
+                            double depositAmount = karna.nextDouble();
+                            atm.deposit(depositAmount);
+                            break;
+                        case 3:
+                            System.out.print("Enter withdrawal amount: ");
+                            double withdrawAmount = karna.nextDouble();
+                            atm.withdraw(withdrawAmount);
+                            break;
+                        case 4:
+                            System.out.println("Thank you for using our ATM. Goodbye!");
+                            return;
+                        default:
+                            System.out.println("Invalid choice! Please try again.");
+                    }
                 }
             }
-        }
-        else{
-            System.out.println("Invalid Pin Number.");
+            else{
+                attempt--;
+                if(attempt==0){
+                    System.out.println("Your card is blocked for 24 Hours.");
+                }
+                else{
+                    System.out.println("Invalid Pin Number. Attempts left: "+attempt);
+                }
+            }
         }
     }
 }
